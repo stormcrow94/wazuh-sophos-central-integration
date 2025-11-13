@@ -1,0 +1,31 @@
+# Credenciais (nunca versionar!)
+.env
+
+# Logs e cursores (gerados em runtime)
+sophos-api.log
+sophos_cursor_events.txt
+sophos_cursor_alerts.txt
+
+# Arquivos temporários
+*.tar.gz
+*.zip
+example_*.json
+test_*.py
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
