@@ -1,0 +1,41 @@
+name: Sync wiki
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'wiki.md'
+      - '.github/workflows/sync-wiki.yml'
+
+jobs:
+  sync-wiki:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Checkout Wiki
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}.wiki
+          path: wiki
+
+      - name: Copy wiki.md to Wiki/Home.md
+        run: |
+          mkdir -p wiki
+          cp wiki.md "wiki/Home.md"
+
+      - name: Commit & push to Wiki
+        run: |
+          cd wiki
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git add Home.md
+          if git commit -m "Sync wiki from wiki.md @ ${{ github.sha }}"; then
+            git push
+          else
+            echo "No changes to commit"
+          fi
+
